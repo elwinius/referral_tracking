@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <preConditions>
+        <runningAs username="liquibase"/>
+    </preConditions>
+
+    <changeSet id="1" author="maguilar">
+        <createTable tableName="referral">
+            <column name="referral_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="domain" type="varchar(100))"/>
+            <column name="referral_date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    
+    <changeSet id="2" author="maguilar">
+        <sql>
+        	CREATE INDEX `idx_domain` ON `referral` (`domain`);
+        	CREATE INDEX `idx_referral_date` ON `referral` (`referral_date`);
+        </sql>
+    </changeSet>
+    
+    <changeSet id="3" author="maguilar">
+        <createTable tableName="domain">
+            <column name="domain_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100))"/>
+        </createTable>
+		<createIndex indexName="uidx_name" tableName="domain" unique="true">
+			<column name="name"/>
+		</createIndex>
+    </changeSet>
+    
+    <changeSet id="4" author="maguilar">
+        <sql>
+        	ALTER TABLE `referral` CHANGE `domain` `domain_id` INT(11) NOT NULL;
+        	DROP INDEX `idx_domain` ON `referral`;
+        	ALTER TABLE `referral` ADD CONSTRAINT `fk_domain` FOREIGN KEY (`domain_id`) REFERENCES `domain`(`domain_id`);
+        </sql>
+	</changeSet>
+	
+	<!-- some seed domain data -->
+	<changeSet id="5" author="maguilar">
+        <sql>
+			INSERT INTO domain (name) SELECT 'ransom.com';
+			INSERT INTO domain (name) SELECT 'yahoo.com';
+			INSERT INTO domain (name) SELECT 'bing.com';
+			INSERT INTO domain (name) SELECT 'zoolander.com';
+			INSERT INTO domain (name) SELECT 'centerforkidswhocantreadgood.com';
+			INSERT INTO domain (name) SELECT 'starwars.com';
+			INSERT INTO domain (name) SELECT 'winners.losers.com';
+			INSERT INTO domain (name) SELECT 'www.losers.com';
+			INSERT INTO domain (name) SELECT 'ebaumsworld.com';
+			INSERT INTO domain (name) SELECT 'microsoft.com';
+			INSERT INTO domain (name) SELECT 'ge.com';
+			INSERT INTO domain (name) SELECT 'intuit.com';
+			INSERT INTO domain (name) SELECT 'turbotax.intuit.com';
+			INSERT INTO domain (name) SELECT 'quickbooks.intuit.com';
+        </sql>
+	</changeSet>
+	
+	<!-- some seed referral data -->
+	<changeSet id="6" author="maguilar">
+        <sql>
+			INSERT INTO referral (domain_id, referral_date) SELECT 1, '2016-01-01 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 1, '2016-01-02 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 1, '2016-01-10 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 1, '2016-02-05 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 1, '2016-02-01 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 1, '2016-03-01 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 1, '2016-03-01 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 1, '2016-03-01 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 1, '2016-03-01 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 1, '2016-04-01 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 1, '2016-05-01 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 1, '2016-06-01 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 1, '2016-06-01 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 1, '2016-06-01 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 2, '2016-01-02 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 2, '2016-01-02 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 2, '2016-01-02 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 2, '2016-01-02 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 2, '2016-02-01 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 2, '2016-03-01 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 2, '2016-04-12 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 2, '2016-04-12 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 2, '2016-04-12 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 2, '2016-04-01 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 2, '2016-06-29 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 2, '2016-06-29 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 2, '2016-06-29 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 2, '2016-06-30 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 3, '2016-02-14 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 3, '2016-02-14 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 3, '2016-02-14 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 3, '2016-02-14 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 3, '2016-02-14 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 3, '2016-02-14 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 3, '2016-05-12 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 3, '2016-05-12 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 3, '2016-05-12 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 3, '2016-05-12 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 3, '2016-07-01 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 3, '2016-07-01 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 3, '2016-07-01 0:00:00';
+			INSERT INTO referral (domain_id, referral_date) SELECT 3, '2016-07-01 0:00:00';
+        </sql>
+	</changeSet>
+	
+	<!-- ensure each seed domain has at least one referral record -->
+	<changeSet id="7" author="maguilar">
+        <sql>
+			INSERT INTO referral (domain_id, referral_date)
+			SELECT d.domain_id, NOW()
+			FROM domain d;
+        </sql>
+	</changeSet>
+	
+	<!-- enter more seed referral records -->
+	<changeSet id="8" author="maguilar">
+        <sql>
+			INSERT INTO referral (domain_id, referral_date)
+			SELECT d.domain_id, NOW() + INTERVAL 45 DAY
+			FROM domain d;
+        </sql>
+	</changeSet>
+	
+</databaseChangeLog>

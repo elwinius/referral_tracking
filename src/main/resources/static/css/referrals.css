@@ -1,0 +1,15 @@
+.md-button {
+	color: currentColor;
+	text-align: left;
+	background-color: rgba(50, 50, 50, 0.2);
+	text-transform: lowercase;
+}
+
+.md-button:not ([disabled] ):hover {
+	background-color: rgba(158, 158, 158, 0.2);
+}
+
+.md-button[disabled] {
+	color: rgba(0, 0, 0, 0.26);
+	background-color: transparent;
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html ng-app="referrals">
+<head>
+<title>Referrer Stats</title>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.bundle.min.js"></script>
+<script type="text/javascript" src="../js/referrals.js"></script>
+
+<link rel="stylesheet"
+	href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+<link rel="stylesheet" href="../css/referrals.css">
+
+</head>
+
+<body ng-controller="domain">
+<h2 class="md-display-1">Referrer Statistics</h2>
+	<div id="domains" layout="column" layout-align="center none">
+		<md-input-container>
+		    <label>Search</label>
+			<input name="search" ng-model="searchDomains" />
+		</md-input-container>
+		<md-checkbox ng-model="showTop3" ng-change="toggleShowTop3()" aria-label="Top3">
+			Show Top 3 Only
+		</md-checkbox>
+		<div layout="column" layout-align="center none">
+			<md-button ng-repeat="x in names | filter:searchDomains" ng-click="showGraph($event, x.id, x.name)">{{x.name}}</md-button>
+		</div>
+	</div>
+</body>
+</html>
